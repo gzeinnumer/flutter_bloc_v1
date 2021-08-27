@@ -12,6 +12,8 @@ part 'covid_state.dart';
 class CovidBloc extends Bloc<CovidEvent, CovidState> {
   final ApiRepository _apiRepository = ApiRepository();
 
+  CovidBloc(CovidState initialState) : super(initialState);
+
   @override
   CovidState get initialState => CovidInitial();
 
@@ -25,7 +27,7 @@ class CovidBloc extends Bloc<CovidEvent, CovidState> {
         final mList = await _apiRepository.fetchCovidList();
         yield CovidLoaded(mList);
         if (mList.error != null) {
-          yield CovidError(mList.error);
+          yield CovidError("Failed to fetch data");
         }
       } on NetworkError {
         yield CovidError("Failed to fetch data. is your device online?");

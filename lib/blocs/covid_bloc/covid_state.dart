@@ -13,7 +13,7 @@ class CovidInitial extends CovidState {
 class CovidLoading extends CovidState {
   const CovidLoading();
   @override
-  List<Object> get props => null;
+  List<Object> get props => [];
 }
 
 class CovidLoaded extends CovidState {

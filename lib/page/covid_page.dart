@@ -4,7 +4,7 @@ import 'package:flutter_bloc_v1/blocs/covid_bloc/covid_bloc.dart';
 import 'package:flutter_bloc_v1/model/covid_model.dart';
 
 class CovidPage extends StatefulWidget {
-  CovidPage({Key key, this.title}) : super(key: key);
+  CovidPage({required this.title}) : super();
 
   final String title;
 
@@ -13,7 +13,7 @@ class CovidPage extends StatefulWidget {
 }
 
 class _CovidPageState extends State<CovidPage> {
-  final CovidBloc _bloc = CovidBloc();
+  final CovidBloc _bloc = CovidBloc(CovidInitial());
 
   @override
   void initState() {
@@ -46,17 +46,17 @@ class _CovidPageState extends State<CovidPage> {
           },
           child: BlocBuilder<CovidBloc, CovidState>(
             builder: (context, state) {
-              Widget w;
               if (state is CovidInitial) {
-                w = _buildLoading();
+                 return _buildLoading();
               } else if (state is CovidLoading) {
-                w = _buildLoading();
+                return _buildLoading();
               } else if (state is CovidLoaded) {
-                w = _buildCard(context, state.covidModel);
+                return _buildCard(context, state.covidModel);
               } else if (state is CovidError) {
-                w = Container();
+                return Container();
+              }else{
+                return Container();
               }
-              return w;
             },
           ),
         ),
@@ -66,7 +66,7 @@ class _CovidPageState extends State<CovidPage> {
 
   Widget _buildCard(BuildContext context, CovidModel model) {
     return ListView.builder(
-      itemCount: model.countries.length,
+      itemCount: model.countries?.length,
       itemBuilder: (context, index) {
         return Container(
           margin: EdgeInsets.all(8.0),
@@ -75,10 +75,10 @@ class _CovidPageState extends State<CovidPage> {
               margin: EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
-                  Text("Country: ${model.countries[index].country}"),
-                  Text("Total Confirmed: ${model.countries[index].totalConfirmed}"),
-                  Text("Total Deaths: ${model.countries[index].totalDeaths}"),
-                  Text("Total Recovered: ${model.countries[index].totalRecovered}"),
+                  Text("Country: ${model.countries?[index].country}"),
+                  Text("Total Confirmed: ${model.countries?[index].totalConfirmed}"),
+                  Text("Total Deaths: ${model.countries?[index].totalDeaths}"),
+                  Text("Total Recovered: ${model.countries?[index].totalRecovered}"),
                 ],
               ),
             ),

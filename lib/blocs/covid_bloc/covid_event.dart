@@ -6,5 +6,5 @@ abstract class CovidEvent extends Equatable {
 
 class GetCovidList extends CovidEvent {
   @override
-  List<Object> get props => null;
+  List<Object> get props => [];
 }
